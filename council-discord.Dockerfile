@@ -2,14 +2,17 @@ FROM maven:3.9-eclipse-temurin-21-alpine as build
 
 WORKDIR /workspace/app
 
-COPY council-discord/pom.xml council-discord/pom.xml
-COPY council-discord/src council-discord/src
+COPY pom.xml .
+RUN mvn install
 
 COPY council-common/pom.xml council-common/pom.xml
 COPY council-common/src council-common/src
-
 RUN mvn install -DskipTests -f council-common/pom.xml
+
+COPY council-discord/pom.xml council-discord/pom.xml
+COPY council-discord/src council-discord/src
 RUN mvn install -DskipTests -f council-discord/pom.xml
+
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../../council-discord/target/*.jar)
 
 FROM eclipse-temurin:21-jdk-alpine

@@ -2,14 +2,17 @@ FROM maven:3.9-eclipse-temurin-21-alpine as build
 
 WORKDIR /workspace/app
 
-COPY council-rewritten-integration/pom.xml council-rewritten-integration/pom.xml
-COPY council-rewritten-integration/src council-rewritten-integration/src
+COPY pom.xml .
+RUN mvn install
 
 COPY council-common/pom.xml council-common/pom.xml
 COPY council-common/src council-common/src
-
 RUN mvn install -DskipTests -f council-common/pom.xml
+
+COPY council-rewritten-integration/pom.xml council-rewritten-integration/pom.xml
+COPY council-rewritten-integration/src council-rewritten-integration/src
 RUN mvn install -DskipTests -f council-rewritten-integration/pom.xml
+
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../../council-rewritten-integration/target/*.jar)
 
 FROM eclipse-temurin:21-jdk-alpine

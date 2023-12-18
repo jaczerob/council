@@ -4,13 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.0</version>
+        <groupId>dev.jaczerob.council</groupId>
+        <artifactId>council-parent</artifactId>
+        <version>0.1</version>
         <relativePath/>
     </parent>
 
-    <groupId>dev.jaczerob.council</groupId>
     <artifactId>council-rewritten-integration</artifactId>
     <version>0.1</version>
 
@@ -19,36 +18,11 @@
 
     <properties>
         <java.version>21</java.version>
-
-        <camel-spring-boot-dependencies.version>4.2.0</camel-spring-boot-dependencies.version>
-        <spring-cloud-dependencies.version>2023.0.0</spring-cloud-dependencies.version>
-        <streamex.version>0.8.2</streamex.version>
-
-        <activemq.version>6.0.1</activemq.version>
     </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.apache.camel.springboot</groupId>
-                <artifactId>camel-spring-boot-dependencies</artifactId>
-                <version>${camel-spring-boot-dependencies.version}</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud-dependencies.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <dependencies>
         <dependency>
-            <groupId>dev.jaczerob.council.common</groupId>
+            <groupId>dev.jaczerob.council</groupId>
             <artifactId>council-common</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -81,15 +55,6 @@
         <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-pool</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>one.util</groupId>
-            <artifactId>streamex</artifactId>
-            <version>${streamex.version}</version>
         </dependency>
     </dependencies>
 
