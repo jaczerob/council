@@ -1,0 +1,15 @@
+discord:
+    token: ${DISCORD_TOKEN}
+    guild-id: ${DISCORD_GUILD_ID}
+
+topics:
+    news: activemq:topic:${NEWS_TOPIC:NewsTopic}
+    districts: activemq:topic:${DISTRICTS_TOPIC:DistrictsTopic}
+    release-notes: activemq:topic:${RELEASE_NOTES_TOPIC:ReleaseNotesTopic}
+    field-offices: activemq:topic:${FIELD_OFFICES_TOPIC:FieldOfficesTopic}
+    status: activemq:topic:${STATUS_TOPIC:StatusTopic}
+
+spring:
+    threads:
+        virtual:
+            enabled: true

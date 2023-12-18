@@ -1,0 +1,31 @@
+services:
+  broker:
+    container_name: broker
+    build:
+        context: .
+        dockerfile: council-broker.Dockerfile
+    ports:
+      - 61616:61616
+
+  integrations-rewritten:
+    container_name: rewritten-integration
+    build:
+      context: .
+      dockerfile: council-rewritten-integration.Dockerfile
+    environment:
+      - BROKER_HOST=tcp://broker:61616
+      - spring.activemq.broker-url=tcp://broker:61616
+    depends_on:
+      - broker
+
+  discord:
+    container_name: discord
+    build:
+      context: .
+      dockerfile: council-discord.Dockerfile
+    environment:
+      - BROKER_HOST=tcp://broker:61616
+      - spring.activemq.broker-url=tcp://broker:61616
+    depends_on:
+        - broker
+        - integrations-rewritten
