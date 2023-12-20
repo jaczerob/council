@@ -13,15 +13,11 @@ COPY council-grpc-interface/pom.xml council-grpc-interface/pom.xml
 COPY council-grpc-interface/src council-grpc-interface/src
 RUN mvn install -DskipTests -f council-grpc-interface/pom.xml
 
-COPY council-discord-framework/pom.xml council-discord-framework/pom.xml
-COPY council-discord-framework/src council-discord-framework/src
-RUN mvn install -DskipTests -f council-discord-framework/pom.xml
+COPY council-database/pom.xml council-database/pom.xml
+COPY council-database/src council-database/src
+RUN mvn install -DskipTests -f council-database/pom.xml
 
-COPY council-discord/pom.xml council-discord/pom.xml
-COPY council-discord/src council-discord/src
-RUN mvn install -DskipTests -f council-discord/pom.xml
-
-RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../../council-discord/target/*.jar)
+RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../../council-database/target/*.jar)
 
 FROM eclipse-temurin:21-jdk-alpine
 
@@ -32,4 +28,4 @@ COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
 
-ENTRYPOINT ["java","-cp","app:app/lib/*","dev.jaczerob.council.discord.App"]
+ENTRYPOINT ["java","-cp","app:app/lib/*","dev.jaczerob.council.database.App"]

@@ -20,12 +20,14 @@
     <properties>
         <java.version>21</java.version>
 
-        <camel-spring-boot-dependencies.version>4.2.0</camel-spring-boot-dependencies.version>
-        <spring-cloud-dependencies.version>2023.0.0</spring-cloud-dependencies.version>
-        <streamex.version>0.8.2</streamex.version>
-
         <activemq.version>6.0.1</activemq.version>
+        <camel-spring-boot-dependencies.version>4.2.0</camel-spring-boot-dependencies.version>
+        <io-grpc.version>1.58.0</io-grpc.version>
+        <grpc.version>2.15.0.RELEASE</grpc.version>
         <JDA.version>5.0.0-beta.18</JDA.version>
+        <protobuf.version>3.23.4</protobuf.version>
+        <protobuf-plugin.version>0.6.1</protobuf-plugin.version>
+        <spring-cloud-dependencies.version>2023.0.0</spring-cloud-dependencies.version>
     </properties>
 
     <dependencyManagement>

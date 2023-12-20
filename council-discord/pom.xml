@@ -11,7 +11,6 @@
 	</parent>
 
 	<artifactId>council-discord</artifactId>
-
 	<name>council-discord</name>
 	<description>council-discord</description>
 
@@ -20,6 +19,16 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>net.devh</groupId>
+			<artifactId>grpc-client-spring-boot-starter</artifactId>
+			<version>${grpc.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>dev.jaczerob.council.grpc</groupId>
+			<artifactId>council-grpc-interface</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>dev.jaczerob.council</groupId>
 			<artifactId>council-common</artifactId>

@@ -5,21 +5,29 @@ import dev.jaczerob.council.common.models.fieldoffices.ZonedFieldOffices;
 import dev.jaczerob.council.common.models.news.NewsPartial;
 import dev.jaczerob.council.common.models.releasenotes.ReleaseNotes;
 import dev.jaczerob.council.common.models.status.Status;
+import dev.jaczerob.council.grpc.types.BroadcastChannel;
+import dev.jaczerob.council.grpc.types.BroadcastChannelType;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import org.apache.camel.Exchange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class BroadcastService {
     private static final Logger log = LoggerFactory.getLogger(BroadcastService.class);
 
     private final JDA jda;
+    private final BroadcastStub broadcastStub;
 
-    public BroadcastService(final JDA jda) {
+    public BroadcastService(final JDA jda, final BroadcastStub broadcastStub) {
         this.jda = jda;
+        this.broadcastStub = broadcastStub;
     }
 
     public void broadcast(final Exchange message) {
@@ -54,9 +62,7 @@ public class BroadcastService {
             embed.addField(noteTitle, noteBody.toString(), false);
         }
 
-        this.jda.getTextChannelsByName("general", true).get(0)
-                .sendMessageEmbeds(embed.build())
-                .queue();
+        this.sendBroadcasts(BroadcastChannelType.RELEASENOTES, embed.build());
     }
 
     private void broadcastDistricts(final Districts districts) {
@@ -71,9 +77,7 @@ public class BroadcastService {
             embed.addField(districtName, String.format("Population: %d\nStatus: %s", districtPopulation, districtStatus), true);
         });
 
-        this.jda.getTextChannelsByName("general", true).get(0)
-                .sendMessageEmbeds(embed.build())
-                .queue();
+        this.sendBroadcasts(BroadcastChannelType.DISTRICTS, embed.build());
     }
 
     private void broadcastFieldOffices(final ZonedFieldOffices fieldOffices) {
@@ -89,9 +93,7 @@ public class BroadcastService {
             embed.addField(zone, String.format("Difficulty: %s\nAnnexes: %d\nOpen: %s", difficulty, annexes, open), true);
         });
 
-        this.jda.getTextChannelsByName("general", true).get(0)
-                .sendMessageEmbeds(embed.build())
-                .queue();
+        this.sendBroadcasts(BroadcastChannelType.FIELDOFFICES, embed.build());
     }
 
     private void broadcastStatus(final Status status) {
@@ -99,9 +101,7 @@ public class BroadcastService {
         embed.setTitle("Toontown Rewritten Status");
         embed.setDescription(String.format("Toontown Rewritten is: %s", status.open() ? "Open" : "Closed"));
 
-        this.jda.getTextChannelsByName("general", true).get(0)
-                .sendMessageEmbeds(embed.build())
-                .queue();
+        this.sendBroadcasts(BroadcastChannelType.STATUS, embed.build());
     }
 
     private void broadcastNews(final NewsPartial news) {
@@ -110,8 +110,19 @@ public class BroadcastService {
         embed.setDescription(String.format("%s - %s", news.author(), news.title()));
         embed.setUrl(news.url());
 
-        this.jda.getTextChannelsByName("general", true).get(0)
-                .sendMessageEmbeds(embed.build())
-                .queue();
+        this.sendBroadcasts(BroadcastChannelType.NEWS, embed.build());
+    }
+
+    private void sendBroadcasts(final BroadcastChannelType type, final MessageEmbed embed) {
+        final List<BroadcastChannel> broadcastChannels = this.broadcastStub.getBroadcastChannels(type);
+        broadcastChannels.forEach(broadcastChannel -> {
+            final TextChannel channel = this.jda.getTextChannelById(broadcastChannel.getId());
+            if (channel != null) {
+                channel.sendMessageEmbeds(embed).queue();
+                log.info("Sent broadcast to channel {}", channel.getName());
+            } else {
+                log.error("Could not find channel {}", broadcastChannel.getId());
+            }
+        });
     }
 }
