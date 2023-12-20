@@ -1,6 +1,6 @@
-package dev.jaczerob.council.discord.interactions.models;
+package dev.jaczerob.council.discord.framework.interactions.models;
 
-import dev.jaczerob.council.discord.exceptions.DiscordException;
+import dev.jaczerob.council.discord.framework.exceptions.DiscordException;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.interaction.command.GenericCommandInteractionEvent;
 import net.dv8tion.jda.api.utils.messages.MessageCreateData;

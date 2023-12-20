@@ -1,4 +1,4 @@
-package dev.jaczerob.council.discord.interactions.models;
+package dev.jaczerob.council.discord.framework.interactions.models;
 
 import net.dv8tion.jda.api.events.interaction.command.UserContextInteractionEvent;
 

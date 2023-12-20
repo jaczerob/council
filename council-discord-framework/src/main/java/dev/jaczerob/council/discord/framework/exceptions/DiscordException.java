@@ -1,4 +1,4 @@
-package dev.jaczerob.council.discord.exceptions;
+package dev.jaczerob.council.discord.framework.exceptions;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;

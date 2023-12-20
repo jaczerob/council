@@ -1,6 +1,6 @@
-package dev.jaczerob.council.discord.interactions.handlers;
+package dev.jaczerob.council.discord.framework.interactions.handlers;
 
-import dev.jaczerob.council.discord.interactions.models.Interaction;
+import dev.jaczerob.council.discord.framework.interactions.models.Interaction;
 import net.dv8tion.jda.api.events.interaction.command.GenericCommandInteractionEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

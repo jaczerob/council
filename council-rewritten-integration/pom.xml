@@ -11,8 +11,6 @@
     </parent>
 
     <artifactId>council-rewritten-integration</artifactId>
-    <version>0.1</version>
-
     <name>council-rewritten-integration</name>
     <description>council-rewritten-integration</description>
 

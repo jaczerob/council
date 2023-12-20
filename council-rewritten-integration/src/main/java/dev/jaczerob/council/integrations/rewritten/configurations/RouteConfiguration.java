@@ -42,10 +42,14 @@ public class RouteConfiguration extends RouteBuilder {
                     .choice()
                         .when(exchangeProperty("API_ERROR").isNotNull())
                             .log(String.format("API Error in %s: ${exchangeProperty.API_ERROR}", topic))
+                        .endChoice()
+                        .when(exchangeProperty("INTERNAL_ERROR").isNotNull())
+                            .log(String.format("Internal Error in %s: ${exchangeProperty.INTERNAL_ERROR}", topic))
+                        .endChoice()
                         .otherwise()
                             .log(String.format("Broadcasting to %s", topic))
                             .to(topic)
-                    .endChoice()
+                        .endChoice()
                     .end()
         );
     }

@@ -1,10 +1,10 @@
-package dev.jaczerob.council.discord.interactions.handlers;
+package dev.jaczerob.council.discord.framework.interactions.handlers;
 
-import dev.jaczerob.council.discord.exceptions.DiscordException;
-import dev.jaczerob.council.discord.interactions.models.Interaction;
-import dev.jaczerob.council.discord.interactions.models.MessageContextCommand;
-import dev.jaczerob.council.discord.interactions.models.SlashCommand;
-import dev.jaczerob.council.discord.interactions.models.UserContextCommand;
+import dev.jaczerob.council.discord.framework.exceptions.DiscordException;
+import dev.jaczerob.council.discord.framework.interactions.models.Interaction;
+import dev.jaczerob.council.discord.framework.interactions.models.MessageContextCommand;
+import dev.jaczerob.council.discord.framework.interactions.models.SlashCommand;
+import dev.jaczerob.council.discord.framework.interactions.models.UserContextCommand;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.ISnowflake;
 import net.dv8tion.jda.api.entities.Member;

@@ -1,4 +1,4 @@
-package dev.jaczerob.council.discord.configurations;
+package dev.jaczerob.council.discord.framework;
 
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -1,10 +1,10 @@
-package dev.jaczerob.council.discord.configurations;
+package dev.jaczerob.council.discord.framework;
 
-import dev.jaczerob.council.discord.interactions.handlers.InteractionEventManager;
-import dev.jaczerob.council.discord.interactions.handlers.InteractionRegistry;
-import dev.jaczerob.council.discord.interactions.models.MessageContextCommand;
-import dev.jaczerob.council.discord.interactions.models.SlashCommand;
-import dev.jaczerob.council.discord.interactions.models.UserContextCommand;
+import dev.jaczerob.council.discord.framework.interactions.handlers.InteractionEventManager;
+import dev.jaczerob.council.discord.framework.interactions.handlers.InteractionRegistry;
+import dev.jaczerob.council.discord.framework.interactions.models.MessageContextCommand;
+import dev.jaczerob.council.discord.framework.interactions.models.SlashCommand;
+import dev.jaczerob.council.discord.framework.interactions.models.UserContextCommand;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Guild;
@@ -20,6 +20,7 @@ import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -35,6 +36,7 @@ import java.util.concurrent.ThreadFactory;
 
 @Configuration
 @EnableConfigurationProperties(DiscordProperties.class)
+@ConditionalOnClass(JDA.class)
 public class DiscordAutoConfiguration {
     private static final Logger log = LoggerFactory.getLogger(DiscordAutoConfiguration.class);
 
