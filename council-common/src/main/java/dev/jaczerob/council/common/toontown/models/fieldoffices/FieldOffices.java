@@ -1,6 +1,6 @@
-package dev.jaczerob.council.common.models.fieldoffices;
+package dev.jaczerob.council.common.toontown.models.fieldoffices;
 
-import dev.jaczerob.council.common.models.ToontownObject;
+import dev.jaczerob.council.common.toontown.models.ToontownObject;
 
 import java.util.*;
 

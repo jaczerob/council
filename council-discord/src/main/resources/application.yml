@@ -2,6 +2,9 @@ discord:
     token: ${DISCORD_TOKEN}
     guild-id: ${DISCORD_GUILD_ID}
 
+database:
+    url: ${DATABASE_URL}
+
 topics:
     news: activemq:topic:${NEWS_TOPIC:NewsTopic}
     districts: activemq:topic:${DISTRICTS_TOPIC:DistrictsTopic}
@@ -13,11 +16,3 @@ spring:
     threads:
         virtual:
             enabled: true
-
-grpc:
-    client:
-        local-grpc-server:
-            address: ${GRPC_ADDRESS:static://127.0.0.1:9898}
-            enableKeepAlive: true
-            keepAliveWithoutCalls: true
-            negotiationType: plaintext

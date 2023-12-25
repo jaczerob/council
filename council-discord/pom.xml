@@ -20,16 +20,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>net.devh</groupId>
-			<artifactId>grpc-client-spring-boot-starter</artifactId>
-			<version>${grpc.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>dev.jaczerob.council.grpc</groupId>
-			<artifactId>council-grpc-interface</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>dev.jaczerob.council</groupId>
 			<artifactId>council-common</artifactId>
 			<version>${project.version}</version>
@@ -48,6 +38,10 @@
 					<artifactId>spring-boot-starter-web</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.camel.springboot</groupId>

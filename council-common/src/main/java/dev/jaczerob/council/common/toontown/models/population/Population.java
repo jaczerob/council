@@ -1,6 +1,6 @@
-package dev.jaczerob.council.common.models.population;
+package dev.jaczerob.council.common.toontown.models.population;
 
-import dev.jaczerob.council.common.models.ToontownObject;
+import dev.jaczerob.council.common.toontown.models.ToontownObject;
 
 import java.util.Map;
 

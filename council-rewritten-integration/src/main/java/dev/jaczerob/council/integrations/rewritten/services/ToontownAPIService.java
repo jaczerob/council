@@ -1,12 +1,12 @@
 package dev.jaczerob.council.integrations.rewritten.services;
 
-import dev.jaczerob.council.common.models.fieldoffices.FieldOffices;
-import dev.jaczerob.council.common.models.invasions.Invasions;
-import dev.jaczerob.council.common.models.news.News;
-import dev.jaczerob.council.common.models.population.Population;
-import dev.jaczerob.council.common.models.releasenotes.ReleaseNotes;
-import dev.jaczerob.council.common.models.releasenotes.ReleaseNotesPartial;
-import dev.jaczerob.council.common.models.status.Status;
+import dev.jaczerob.council.common.toontown.models.fieldoffices.FieldOffices;
+import dev.jaczerob.council.common.toontown.models.invasions.Invasions;
+import dev.jaczerob.council.common.toontown.models.news.News;
+import dev.jaczerob.council.common.toontown.models.population.Population;
+import dev.jaczerob.council.common.toontown.models.releasenotes.ReleaseNotes;
+import dev.jaczerob.council.common.toontown.models.releasenotes.ReleaseNotesPartial;
+import dev.jaczerob.council.common.toontown.models.status.Status;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

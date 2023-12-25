@@ -25,14 +25,13 @@
         </dependency>
 
         <dependency>
-            <groupId>net.devh</groupId>
-            <artifactId>grpc-server-spring-boot-starter</artifactId>
-            <version>${grpc.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>dev.jaczerob.council.grpc</groupId>
-            <artifactId>council-grpc-interface</artifactId>
+            <groupId>dev.jaczerob.council</groupId>
+            <artifactId>council-common</artifactId>
             <version>${project.version}</version>
         </dependency>
 

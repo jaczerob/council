@@ -1,4 +1,4 @@
-package dev.jaczerob.council.common.models;
+package dev.jaczerob.council.common.toontown.models;
 
 import java.io.Serializable;
 

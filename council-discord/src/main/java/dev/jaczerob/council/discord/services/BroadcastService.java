@@ -1,12 +1,12 @@
 package dev.jaczerob.council.discord.services;
 
-import dev.jaczerob.council.common.models.districts.Districts;
-import dev.jaczerob.council.common.models.fieldoffices.ZonedFieldOffices;
-import dev.jaczerob.council.common.models.news.NewsPartial;
-import dev.jaczerob.council.common.models.releasenotes.ReleaseNotes;
-import dev.jaczerob.council.common.models.status.Status;
-import dev.jaczerob.council.grpc.types.BroadcastChannel;
-import dev.jaczerob.council.grpc.types.BroadcastChannelType;
+import dev.jaczerob.council.common.broadcast.models.BroadcastChannel;
+import dev.jaczerob.council.common.broadcast.models.BroadcastChannelType;
+import dev.jaczerob.council.common.toontown.models.districts.Districts;
+import dev.jaczerob.council.common.toontown.models.fieldoffices.ZonedFieldOffices;
+import dev.jaczerob.council.common.toontown.models.news.NewsPartial;
+import dev.jaczerob.council.common.toontown.models.releasenotes.ReleaseNotes;
+import dev.jaczerob.council.common.toontown.models.status.Status;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -15,6 +15,7 @@ import org.apache.camel.Exchange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 
@@ -23,11 +24,12 @@ public class BroadcastService {
     private static final Logger log = LoggerFactory.getLogger(BroadcastService.class);
 
     private final JDA jda;
-    private final BroadcastStub broadcastStub;
+    private final BroadcastChannelService broadcastChannelService;
 
-    public BroadcastService(final JDA jda, final BroadcastStub broadcastStub) {
+
+    public BroadcastService(final JDA jda, final BroadcastChannelService broadcastChannelService) {
         this.jda = jda;
-        this.broadcastStub = broadcastStub;
+        this.broadcastChannelService = broadcastChannelService;
     }
 
     public void broadcast(final Exchange message) {
@@ -114,14 +116,20 @@ public class BroadcastService {
     }
 
     private void sendBroadcasts(final BroadcastChannelType type, final MessageEmbed embed) {
-        final List<BroadcastChannel> broadcastChannels = this.broadcastStub.getBroadcastChannels(type);
+        final List<BroadcastChannel> broadcastChannels = this.broadcastChannelService.getBroadcastChannels(type);
+
+        if (broadcastChannels == null) {
+            log.error("Could not retrieve broadcast channels");
+            return;
+        }
+
         broadcastChannels.forEach(broadcastChannel -> {
-            final TextChannel channel = this.jda.getTextChannelById(broadcastChannel.getId());
+            final TextChannel channel = this.jda.getTextChannelById(broadcastChannel.id());
             if (channel != null) {
                 channel.sendMessageEmbeds(embed).queue();
                 log.info("Sent broadcast to channel {}", channel.getName());
             } else {
-                log.error("Could not find channel {}", broadcastChannel.getId());
+                log.error("Could not find channel {}", broadcastChannel.id());
             }
         });
     }

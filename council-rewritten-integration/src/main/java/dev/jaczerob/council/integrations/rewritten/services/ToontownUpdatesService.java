@@ -1,16 +1,16 @@
 package dev.jaczerob.council.integrations.rewritten.services;
 
-import dev.jaczerob.council.common.models.ToontownObject;
-import dev.jaczerob.council.common.models.districts.Districts;
-import dev.jaczerob.council.common.models.fieldoffices.FieldOffices;
-import dev.jaczerob.council.common.models.fieldoffices.ZonedFieldOffices;
-import dev.jaczerob.council.common.models.invasions.Invasions;
-import dev.jaczerob.council.common.models.news.News;
-import dev.jaczerob.council.common.models.news.NewsPartial;
-import dev.jaczerob.council.common.models.population.Population;
-import dev.jaczerob.council.common.models.releasenotes.ReleaseNotes;
-import dev.jaczerob.council.common.models.releasenotes.ReleaseNotesPartial;
-import dev.jaczerob.council.common.models.status.Status;
+import dev.jaczerob.council.common.toontown.models.ToontownObject;
+import dev.jaczerob.council.common.toontown.models.districts.Districts;
+import dev.jaczerob.council.common.toontown.models.fieldoffices.FieldOffices;
+import dev.jaczerob.council.common.toontown.models.fieldoffices.ZonedFieldOffices;
+import dev.jaczerob.council.common.toontown.models.invasions.Invasions;
+import dev.jaczerob.council.common.toontown.models.news.News;
+import dev.jaczerob.council.common.toontown.models.news.NewsPartial;
+import dev.jaczerob.council.common.toontown.models.population.Population;
+import dev.jaczerob.council.common.toontown.models.releasenotes.ReleaseNotes;
+import dev.jaczerob.council.common.toontown.models.releasenotes.ReleaseNotesPartial;
+import dev.jaczerob.council.common.toontown.models.status.Status;
 import org.apache.camel.Exchange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

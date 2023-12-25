@@ -1,9 +1,9 @@
 package dev.jaczerob.council.discord.commands;
 
+import dev.jaczerob.council.common.broadcast.models.BroadcastChannelType;
 import dev.jaczerob.council.discord.framework.exceptions.DiscordException;
 import dev.jaczerob.council.discord.framework.interactions.models.SlashCommand;
-import dev.jaczerob.council.discord.services.BroadcastStub;
-import dev.jaczerob.council.grpc.types.BroadcastChannelType;
+import dev.jaczerob.council.discord.services.BroadcastChannelService;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
@@ -18,7 +18,7 @@ import java.util.List;
 @Component
 public class BroadcastCommand extends SlashCommand {
     @Autowired
-    private BroadcastStub broadcastStub;
+    private BroadcastChannelService broadcastChannelService;
 
     @Override
     public @NonNull String getName() {
@@ -39,7 +39,7 @@ public class BroadcastCommand extends SlashCommand {
 
     @Override
     public @NonNull MessageCreateData execute(final @NonNull SlashCommandInteractionEvent event) throws DiscordException {
-        this.broadcastStub.createBroadcastChannel(event.getChannel().getIdLong(), BroadcastChannelType.valueOf(event.getOption("broadcast-type").getAsString()));
+        this.broadcastChannelService.createBroadcastChannel(event.getChannel().getIdLong(), BroadcastChannelType.valueOf(event.getOption("broadcast-type").getAsString()));
         return new MessageCreateBuilder().setContent("This channel is now a broadcast channel for type: " + event.getOption("broadcast-type")).build();
     }
 

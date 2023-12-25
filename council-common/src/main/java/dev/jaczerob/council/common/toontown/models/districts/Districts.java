@@ -1,9 +1,9 @@
-package dev.jaczerob.council.common.models.districts;
+package dev.jaczerob.council.common.toontown.models.districts;
 
-import dev.jaczerob.council.common.models.ToontownObject;
-import dev.jaczerob.council.common.models.invasions.InvasionProperties;
-import dev.jaczerob.council.common.models.invasions.Invasions;
-import dev.jaczerob.council.common.models.population.Population;
+import dev.jaczerob.council.common.toontown.models.ToontownObject;
+import dev.jaczerob.council.common.toontown.models.invasions.InvasionProperties;
+import dev.jaczerob.council.common.toontown.models.invasions.Invasions;
+import dev.jaczerob.council.common.toontown.models.population.Population;
 
 import java.util.*;
 

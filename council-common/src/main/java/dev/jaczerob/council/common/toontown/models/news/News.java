@@ -1,6 +1,6 @@
-package dev.jaczerob.council.common.models.news;
+package dev.jaczerob.council.common.toontown.models.news;
 
-import dev.jaczerob.council.common.models.ToontownObject;
+import dev.jaczerob.council.common.toontown.models.ToontownObject;
 
 public record News(
         String title,

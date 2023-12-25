@@ -25,6 +25,8 @@ services:
       dockerfile: council-database.Dockerfile
     ports:
       - 9898:9898
+    environment:
+      - PORT=9898
 
   discord:
     container_name: discord
@@ -36,7 +38,7 @@ services:
       - spring.activemq.broker-url=tcp://broker:61616
       - DISCORD_TOKEN=${DISCORD_TOKEN}
       - DISCORD_GUILD_ID=${DISCORD_GUILD_ID}
-      - GRPC_ADDRESS=static://database:9898
+      - DATABASE_URL=http://database:9898
     depends_on:
         - broker
         - integrations-rewritten

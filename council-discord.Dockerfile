@@ -9,10 +9,6 @@ COPY council-common/pom.xml council-common/pom.xml
 COPY council-common/src council-common/src
 RUN mvn install -DskipTests -f council-common/pom.xml
 
-COPY council-grpc-interface/pom.xml council-grpc-interface/pom.xml
-COPY council-grpc-interface/src council-grpc-interface/src
-RUN mvn install -DskipTests -f council-grpc-interface/pom.xml
-
 COPY council-discord-framework/pom.xml council-discord-framework/pom.xml
 COPY council-discord-framework/src council-discord-framework/src
 RUN mvn install -DskipTests -f council-discord-framework/pom.xml

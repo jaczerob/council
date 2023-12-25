@@ -1,7 +1,7 @@
-package dev.jaczerob.council.common.models.releasenotes;
+package dev.jaczerob.council.common.toontown.models.releasenotes;
 
 
-import dev.jaczerob.council.common.models.ToontownObject;
+import dev.jaczerob.council.common.toontown.models.ToontownObject;
 
 public record ReleaseNotesPartial(
         int noteId,

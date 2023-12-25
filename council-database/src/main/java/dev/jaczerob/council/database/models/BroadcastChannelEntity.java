@@ -1,6 +1,6 @@
 package dev.jaczerob.council.database.models;
 
-import dev.jaczerob.council.grpc.types.BroadcastChannelType;
+import dev.jaczerob.council.common.broadcast.models.BroadcastChannelType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
