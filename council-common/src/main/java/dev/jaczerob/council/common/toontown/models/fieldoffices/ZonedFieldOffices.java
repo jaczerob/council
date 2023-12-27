@@ -51,4 +51,34 @@ public record ZonedFieldOffices(
     private static String convertZoneIDToZone(final String zoneID) {
         return ZONE_ID_LOOKUP.getOrDefault(zoneID, "Zone Not Found");
     }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (!(obj instanceof ZonedFieldOffices other)) {
+            return false;
+        }
+
+        if (this.fieldOffices() == null || other.fieldOffices() == null) {
+            if (this.fieldOffices() != null) {
+                return false;
+            } else return other.fieldOffices() == null;
+        }
+
+        if (this.fieldOffices().size() != other.fieldOffices().size()) {
+            return false;
+        }
+
+        for (int i = 0; i < this.fieldOffices().size(); i++) {
+            if (!this.fieldOffices().get(i).equals(other.fieldOffices().get(i))) {
+                return false;
+            }
+        }
+
+        return this.error().equals(other.error());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.fieldOffices(), this.error());
+    }
 }

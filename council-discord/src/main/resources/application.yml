@@ -13,6 +13,8 @@ topics:
     status: activemq:topic:${STATUS_TOPIC:StatusTopic}
 
 spring:
+    main:
+        allow-circular-references: true
     threads:
         virtual:
             enabled: true

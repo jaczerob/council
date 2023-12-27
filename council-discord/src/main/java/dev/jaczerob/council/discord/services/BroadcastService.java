@@ -7,15 +7,15 @@ import dev.jaczerob.council.common.toontown.models.fieldoffices.ZonedFieldOffice
 import dev.jaczerob.council.common.toontown.models.news.NewsPartial;
 import dev.jaczerob.council.common.toontown.models.releasenotes.ReleaseNotes;
 import dev.jaczerob.council.common.toontown.models.status.Status;
-import net.dv8tion.jda.api.EmbedBuilder;
+import dev.jaczerob.council.discord.utils.EmbedCreator;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.GuildMessageChannel;
 import org.apache.camel.Exchange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 
@@ -26,6 +26,11 @@ public class BroadcastService {
     private final JDA jda;
     private final BroadcastChannelService broadcastChannelService;
 
+    private Status latestStatus = null;
+    private NewsPartial latestNews = null;
+    private ZonedFieldOffices latestFieldOffices = null;
+    private Districts latestDistricts = null;
+    private ReleaseNotes latestReleaseNotes = null;
 
     public BroadcastService(final JDA jda, final BroadcastChannelService broadcastChannelService) {
         this.jda = jda;
@@ -46,73 +51,119 @@ public class BroadcastService {
         }
     }
 
-    private void broadcastReleaseNotes(final ReleaseNotes releaseNotes) {
-        final EmbedBuilder embed = new EmbedBuilder();
-        embed.setTitle("Release Notes");
-        embed.setDescription(String.format("(%s) %s", releaseNotes.slug(), releaseNotes.date()));
-
-        final String[] notes = releaseNotes.body().substring(1).split("=");
-        for (final String note : notes) {
-            final String[] noteParts = note.split("\\*");
-
-            final String noteTitle = noteParts[0];
-            final StringBuilder noteBody = new StringBuilder();
-            for (int i = 1; i < noteParts.length; i++) {
-                noteBody.append(String.format("• %s\n", noteParts[i]));
-            }
-
-            embed.addField(noteTitle, noteBody.toString(), false);
+    public void broadcastLatestStatus(final GuildMessageChannel channel) {
+        if (this.latestStatus == null) {
+            log.error("No status to broadcast");
+            return;
         }
 
-        this.sendBroadcasts(BroadcastChannelType.RELEASENOTES, embed.build());
+        this.sendBroadcast(EmbedCreator.fromStatus(this.latestStatus), channel);
+    }
+
+    public void broadcastLatestNews(final GuildMessageChannel channel) {
+        if (this.latestNews == null) {
+            log.error("No news to broadcast");
+            return;
+        }
+
+        this.sendBroadcast(EmbedCreator.fromNews(this.latestNews), channel);
+    }
+
+    public void broadcastLatestFieldOffices(final GuildMessageChannel channel) {
+        if (this.latestFieldOffices == null) {
+            log.error("No field offices to broadcast");
+            return;
+        }
+
+        this.sendBroadcast(EmbedCreator.fromFieldOffices(this.latestFieldOffices), channel);
+    }
+
+    public void broadcastLatestDistricts(final GuildMessageChannel channel) {
+        if (this.latestDistricts == null) {
+            log.error("No districts to broadcast");
+            return;
+        }
+
+        this.sendBroadcast(EmbedCreator.fromDistricts(this.latestDistricts), channel);
+    }
+
+    public void broadcastLatestReleaseNotes(final GuildMessageChannel channel) {
+        if (this.latestReleaseNotes == null) {
+            log.error("No release notes to broadcast");
+            return;
+        }
+
+        this.sendBroadcast(EmbedCreator.fromReleaseNotes(this.latestReleaseNotes), channel);
+    }
+
+    private void broadcastReleaseNotes(final ReleaseNotes releaseNotes) {
+        if (this.latestReleaseNotes == null) {
+            this.latestReleaseNotes = releaseNotes;
+        } else {
+            if (this.latestReleaseNotes.equals(releaseNotes)) {
+                log.info("Release notes have not changed");
+                return;
+            }
+        }
+
+        this.sendBroadcasts(BroadcastChannelType.RELEASENOTES, EmbedCreator.fromReleaseNotes(releaseNotes));
     }
 
     private void broadcastDistricts(final Districts districts) {
-        final EmbedBuilder embed = new EmbedBuilder();
-        embed.setTitle("Districts");
+        if (this.latestDistricts == null) {
+            this.latestDistricts = districts;
+        } else {
+            if (this.latestDistricts.equals(districts)) {
+                log.info("Districts have not changed");
+                return;
+            }
+        }
 
-        districts.districts().forEach(district -> {
-            final String districtName = district.name();
-            final int districtPopulation = district.population();
-            final String districtStatus = district.status();
-
-            embed.addField(districtName, String.format("Population: %d\nStatus: %s", districtPopulation, districtStatus), true);
-        });
-
-        this.sendBroadcasts(BroadcastChannelType.DISTRICTS, embed.build());
+        this.sendBroadcasts(BroadcastChannelType.DISTRICTS, EmbedCreator.fromDistricts(districts));
     }
 
     private void broadcastFieldOffices(final ZonedFieldOffices fieldOffices) {
-        final EmbedBuilder embed = new EmbedBuilder();
-        embed.setTitle("Field Offices");
+        if (this.latestFieldOffices == null) {
+            this.latestFieldOffices = fieldOffices;
+        } else {
+            if (this.latestFieldOffices.equals(fieldOffices)) {
+                log.info("Field offices have not changed");
+                return;
+            }
+        }
 
-        fieldOffices.fieldOffices().forEach(fieldOffice -> {
-            final String zone = fieldOffice.zone();
-            final String difficulty = "⭐".repeat(fieldOffice.difficulty());
-            final int annexes = fieldOffice.annexes();
-            final boolean open = fieldOffice.open();
-
-            embed.addField(zone, String.format("Difficulty: %s\nAnnexes: %d\nOpen: %s", difficulty, annexes, open), true);
-        });
-
-        this.sendBroadcasts(BroadcastChannelType.FIELDOFFICES, embed.build());
+        this.sendBroadcasts(BroadcastChannelType.FIELDOFFICES, EmbedCreator.fromFieldOffices(fieldOffices));
     }
 
     private void broadcastStatus(final Status status) {
-        final EmbedBuilder embed = new EmbedBuilder();
-        embed.setTitle("Toontown Rewritten Status");
-        embed.setDescription(String.format("Toontown Rewritten is: %s", status.open() ? "Open" : "Closed"));
+        if (this.latestStatus == null) {
+            this.latestStatus = status;
+        } else {
+            if (this.latestStatus.equals(status)) {
+                log.info("Status has not changed");
+                return;
+            }
+        }
 
-        this.sendBroadcasts(BroadcastChannelType.STATUS, embed.build());
+        this.sendBroadcasts(BroadcastChannelType.STATUS, EmbedCreator.fromStatus(status));
     }
 
     private void broadcastNews(final NewsPartial news) {
-        final EmbedBuilder embed = new EmbedBuilder();
-        embed.setTitle("Toontown Rewritten News");
-        embed.setDescription(String.format("%s - %s", news.author(), news.title()));
-        embed.setUrl(news.url());
+        if (this.latestNews == null) {
+            this.latestNews = news;
+        } else {
+            if (this.latestNews.equals(news)) {
+                log.info("News has not changed");
+                return;
+            }
+        }
 
-        this.sendBroadcasts(BroadcastChannelType.NEWS, embed.build());
+        this.sendBroadcasts(BroadcastChannelType.NEWS, EmbedCreator.fromNews(news));
+    }
+
+    private void sendBroadcast(final MessageEmbed embed, final GuildMessageChannel channel) {
+        channel.sendMessageEmbeds(embed).queue();
+        log.info("Sent broadcast to channel {}", channel.getName());
     }
 
     private void sendBroadcasts(final BroadcastChannelType type, final MessageEmbed embed) {
@@ -125,12 +176,12 @@ public class BroadcastService {
 
         broadcastChannels.forEach(broadcastChannel -> {
             final TextChannel channel = this.jda.getTextChannelById(broadcastChannel.id());
-            if (channel != null) {
-                channel.sendMessageEmbeds(embed).queue();
-                log.info("Sent broadcast to channel {}", channel.getName());
-            } else {
+            if (channel == null) {
                 log.error("Could not find channel {}", broadcastChannel.id());
+                return;
             }
+
+            this.sendBroadcast(embed, channel);
         });
     }
 }

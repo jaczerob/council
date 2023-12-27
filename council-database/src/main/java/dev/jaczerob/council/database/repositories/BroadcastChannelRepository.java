@@ -11,5 +11,5 @@ public interface BroadcastChannelRepository extends JpaRepository<BroadcastChann
     @Query("SELECT bc FROM BroadcastChannelEntity bc WHERE bc.type = ?1")
     List<BroadcastChannelEntity> findAllByType(final BroadcastChannelType type);
 
-    boolean existsByIdAndType(final long id, final BroadcastChannelType type);
+    boolean existsByChannelIdAndType(final long channelId, final BroadcastChannelType type);
 }

@@ -36,4 +36,34 @@ public record Districts(
         districtsList.sort(comparator);
         return new Districts(districtsList, "");
     }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (!(obj instanceof Districts other)) {
+            return false;
+        }
+
+        if (this.districts() == null || other.districts() == null) {
+            if (this.districts() != null) {
+                return false;
+            } else return other.districts() == null;
+        }
+
+        if (this.districts().size() != other.districts().size()) {
+            return false;
+        }
+
+        for (int i = 0; i < this.districts().size(); i++) {
+            if (!this.districts().get(i).equals(other.districts().get(i))) {
+                return false;
+            }
+        }
+
+        return this.error().equals(other.error());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.districts(), this.error());
+    }
 }

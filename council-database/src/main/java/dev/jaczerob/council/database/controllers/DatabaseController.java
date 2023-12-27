@@ -29,8 +29,8 @@ public class DatabaseController {
         return ResponseEntity.ok(broadcastChannels);
     }
 
-    @PostMapping("/{id}/{type}")
-    public ResponseEntity<BroadcastChannel> create(final @PathVariable long id, final @PathVariable BroadcastChannelType type) {
-        return ResponseEntity.of(this.broadcastChannelService.createBroadcastChannel(id, type));
+    @PostMapping("/{channelId}/{type}")
+    public ResponseEntity<BroadcastChannel> create(final @PathVariable long channelId, final @PathVariable BroadcastChannelType type) {
+        return ResponseEntity.of(this.broadcastChannelService.createBroadcastChannel(channelId, type));
     }
 }

@@ -30,18 +30,18 @@ public class BroadcastChannelService {
 
     private List<BroadcastChannel> getBroadcastChannels(final List<BroadcastChannelEntity> entities) {
         return entities.stream()
-                .map(entity -> new BroadcastChannel(entity.getType(), entity.getId()))
+                .map(entity -> new BroadcastChannel(entity.getType(), entity.getChannelId()))
                 .toList();
     }
 
-    public Optional<BroadcastChannel> createBroadcastChannel(final long id, final BroadcastChannelType type) {
-        if (this.repository.existsByIdAndType(id, type))
+    public Optional<BroadcastChannel> createBroadcastChannel(final long channelId, final BroadcastChannelType type) {
+        if (this.repository.existsByChannelIdAndType(channelId, type))
             return Optional.empty();
 
-        final BroadcastChannelEntity broadcastChannelEntity = new BroadcastChannelEntity(id, type);
+        final BroadcastChannelEntity broadcastChannelEntity = new BroadcastChannelEntity(channelId, type);
         this.repository.save(broadcastChannelEntity);
 
         log.info("Created broadcast channel: {}", broadcastChannelEntity);
-        return Optional.of(new BroadcastChannel(broadcastChannelEntity.getType(), broadcastChannelEntity.getId()));
+        return Optional.of(new BroadcastChannel(broadcastChannelEntity.getType(), broadcastChannelEntity.getChannelId()));
     }
 }
