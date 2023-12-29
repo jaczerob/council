@@ -84,7 +84,14 @@ public class EmbedCreator {
             final int districtPopulation = district.population();
             final String districtStatus = district.status();
 
-            embed.addField(districtName, String.format("Population: %d\nStatus: %s", districtPopulation, districtStatus), true);
+            final String output;
+            if (district.invasion() != null) {
+                output = String.format("Population: %d\nStatus: %s\nInvasion Cog: %s\nInvasion Progress: %s", districtPopulation, districtStatus, district.invasion().type(), district.invasion().progress());
+            } else {
+                output = String.format("Population: %d\nStatus: %s", districtPopulation, districtStatus);
+            }
+
+            embed.addField(districtName, output, true);
         });
 
         return fill(embed);
