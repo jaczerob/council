@@ -97,7 +97,7 @@ public class InteractionEventManager extends ListenerAdapter {
             final @NonNull T interaction,
             final @NonNull R event
     ) {
-        event.deferReply().queue();
+        event.deferReply(interaction.isEphemeral()).queue();
 
         if (event.getGuild() == null || event.getChannel() == null || event.getMember() == null) {
             event.getHook().sendMessage("This command is not available in DMs.").setEphemeral(true).queue();
@@ -132,7 +132,7 @@ public class InteractionEventManager extends ListenerAdapter {
             event.getHook().sendMessage(messageCreateData).setEphemeral(interaction.isEphemeral()).queue();
         } catch (final DiscordException exc) {
             log.error("Error occurred while executing interaction: {}", exc.getMessage());
-            event.getHook().sendMessageEmbeds(exc.getEmbed()).setEphemeral(exc.isEphemeral()).queue();
+            event.getHook().sendMessageEmbeds(exc.getEmbed()).queue();
         }
 
     }

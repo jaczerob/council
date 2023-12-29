@@ -1,11 +1,15 @@
 services:
   broker:
     container_name: broker
-    build:
-        context: .
-        dockerfile: council-broker.Dockerfile
+    image: symptoma/activemq:latest
+    environment:
+      - ACTIVEMQ_USERNAME=admin
+      - ACTIVEMQ_PASSWORD=admin
+      - ACTIVEMQ_WEBADMIN_USERNAME=admin
+      - ACTIVEMQ_WEBADMIN_PASSWORD=admin
     ports:
       - 61616:61616
+      - 8161:8161
 
   integrations-rewritten:
     container_name: rewritten-integration
@@ -17,16 +21,6 @@ services:
       - spring.activemq.broker-url=tcp://broker:61616
     depends_on:
       - broker
-
-  database:
-    container_name: database
-    build:
-      context: .
-      dockerfile: council-database.Dockerfile
-    ports:
-      - 9898:9898
-    environment:
-      - PORT=9898
 
   discord:
     container_name: discord
@@ -42,4 +36,3 @@ services:
     depends_on:
         - broker
         - integrations-rewritten
-        - database

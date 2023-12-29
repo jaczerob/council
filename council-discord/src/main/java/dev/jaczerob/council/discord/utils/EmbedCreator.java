@@ -91,7 +91,6 @@ public class EmbedCreator {
     }
 
     private static MessageEmbed fill(final EmbedBuilder embed) {
-        embed.setFooter(String.format("Updated %s", LocalDateTime.now()));
         embed.setColor(Color.pink);
 
         return embed.build();

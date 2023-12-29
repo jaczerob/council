@@ -1,5 +1,5 @@
 broadcast:
-  rate: ${BROADCAST_RATE:5000}
+  rate: ${BROADCAST_RATE:60000}
 
 topics:
   news: activemq:topic:${NEWS_TOPIC:NewsTopic}

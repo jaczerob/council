@@ -23,10 +23,10 @@ public class RouteConfiguration extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from(this.newsTopic).to("bean:broadcastService?method=broadcast").end();
-        from(this.statusTopic).to("bean:broadcastService?method=broadcast").end();
-        from(this.districtsTopic).to("bean:broadcastService?method=broadcast").end();
-        from(this.releaseNotesTopic).to("bean:broadcastService?method=broadcast").end();
-        from(this.fieldOfficesTopic).to("bean:broadcastService?method=broadcast").end();
+        from(this.newsTopic).to("bean:toontownUpdatesService?method=updateLatestNews").end();
+        from(this.statusTopic).to("bean:toontownUpdatesService?method=updateLatestStatus").end();
+        from(this.districtsTopic).to("bean:toontownUpdatesService?method=updateLatestDistricts").end();
+        from(this.releaseNotesTopic).to("bean:toontownUpdatesService?method=updateLatestReleaseNotes").end();
+        from(this.fieldOfficesTopic).to("bean:toontownUpdatesService?method=updateLatestFieldOffices").end();
     }
 }
