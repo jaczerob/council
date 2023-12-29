@@ -97,6 +97,25 @@ public class EmbedCreator {
         return fill(embed);
     }
 
+    public static MessageEmbed fromInvasions(final Districts districts) {
+        final EmbedBuilder embed = new EmbedBuilder();
+
+        embed.setTitle("Invasions");
+
+        districts.districts().forEach(district -> {
+            if (district.invasion() != null) {
+                final String districtName = district.name();
+                final String districtStatus = district.status();
+                final String invasionCog = district.invasion().type();
+                final String invasionProgress = district.invasion().progress();
+
+                embed.addField(districtName, String.format("Invasion Cog: %s\nInvasion Progress: %s", invasionCog, invasionProgress), true);
+            }
+        });
+
+        return fill(embed);
+    }
+
     private static MessageEmbed fill(final EmbedBuilder embed) {
         embed.setColor(Color.pink);
 

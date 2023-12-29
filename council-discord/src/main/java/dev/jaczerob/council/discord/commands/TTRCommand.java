@@ -34,7 +34,8 @@ public class TTRCommand extends SlashCommand {
                 new StatusSubCommand(this.toontownUpdatesService),
                 new NewsSubCommand(this.toontownUpdatesService),
                 new FieldOfficesSubCommand(this.toontownUpdatesService),
-                new DistrictsSubCommand(this.toontownUpdatesService)
+                new DistrictsSubCommand(this.toontownUpdatesService),
+                new InvasionsSubCommand(this.toontownUpdatesService)
         );
     }
 
