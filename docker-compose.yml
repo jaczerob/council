@@ -1,4 +1,19 @@
 services:
+  database:
+    container_name: database
+    build:
+      context: .
+      dockerfile: council-database.Dockerfile
+    environment:
+      - BROKER_HOST=tcp://broker:61616
+      - spring.activemq.broker-url=tcp://broker:61616
+      - MYSQL_HOST=${MYSQL_HOST}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASS=${MYSQL_PASS}
+    ports:
+      - 9898:9898
+
   broker:
     container_name: broker
     image: symptoma/activemq:latest
@@ -22,17 +37,13 @@ services:
     depends_on:
       - broker
 
-  discord:
-    container_name: discord
+  toonstats:
+    container_name: toonstats
     build:
       context: .
-      dockerfile: council-discord.Dockerfile
+      dockerfile: council-toonstats.Dockerfile
     environment:
       - BROKER_HOST=tcp://broker:61616
       - spring.activemq.broker-url=tcp://broker:61616
-      - DISCORD_TOKEN=${DISCORD_TOKEN}
-      - DISCORD_GUILD_ID=${DISCORD_GUILD_ID}
-      - DATABASE_URL=http://database:9898
     depends_on:
-        - broker
-        - integrations-rewritten
+      - broker

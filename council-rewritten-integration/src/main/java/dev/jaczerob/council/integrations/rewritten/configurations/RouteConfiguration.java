@@ -37,17 +37,17 @@ public class RouteConfiguration extends RouteBuilder {
         );
 
         topicsToBroadcast.forEach((topic, method) ->
-                from(String.format("timer://notifyEvents?fixedRate=true&period=%d", this.broadcastRate))
-                    .to(String.format("bean:toontownUpdatesService?method=%s", method))
+                from("timer://notifyEvents?fixedRate=true&period=%d".formatted(this.broadcastRate))
+                    .to("bean:toontownUpdatesService?method=%s".formatted(method))
                     .choice()
                         .when(exchangeProperty("API_ERROR").isNotNull())
-                            .log(String.format("API Error in %s: ${exchangeProperty.API_ERROR}", topic))
+                            .log("API Error in %s: ${exchangeProperty.API_ERROR}".formatted(topic))
                         .endChoice()
                         .when(exchangeProperty("INTERNAL_ERROR").isNotNull())
-                            .log(String.format("Internal Error in %s: ${exchangeProperty.INTERNAL_ERROR}", topic))
+                            .log("Internal Error in %s: ${exchangeProperty.INTERNAL_ERROR}".formatted(topic))
                         .endChoice()
                         .otherwise()
-                            .log(String.format("Broadcasting to %s", topic))
+                            .log("Broadcasting to %s".formatted(topic))
                             .to(topic)
                         .endChoice()
                     .end()

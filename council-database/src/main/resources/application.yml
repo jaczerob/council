@@ -1,0 +1,12 @@
+topics:
+  toons: activemq:topic:${TOONS_TOPIC:ToonTopic}
+
+spring:
+  activemq:
+    packages:
+      trust-all: true
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST}/${MYSQL_DATABASE}?sslMode=VERIFY_IDENTITY
+    username: ${MYSQL_USER:admin}
+    password: ${MYSQL_PASS:admin}
+    driver-class-name: com.mysql.cj.jdbc.Driver
